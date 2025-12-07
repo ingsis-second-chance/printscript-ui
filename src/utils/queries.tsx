@@ -41,7 +41,7 @@ export const useSnippetsOperations = () => {
       extension: newSnippet.extension,
       code: newSnippet.content
     }
-    const snippet = await fetchWithAuth('/snippet/save', {
+    const snippet = await fetchWithAuth('/snippets/save', {
       method: 'POST',
       body: JSON.stringify(body)
     });
@@ -57,7 +57,7 @@ export const useSnippetsOperations = () => {
       extension: snippet.extension,
       code: updateSnippet.content
     }
-    const response = await fetchWithAuth('/snippet/update', {
+    const response = await fetchWithAuth('/snippets/update', {
       method: 'POST',
       body: JSON.stringify(body)
     });
@@ -114,7 +114,7 @@ export const useSnippetsOperations = () => {
   }
 
   const getSnippets = async (page: number = 0, pageSize: number = 10, snippetName?: string): Promise<PaginatedSnippets> => {
-    const response = await fetchWithAuth(`/snippet/get/all?relation=ALL&${paginationParams(page, pageSize)}&prefix=${snippetName}`);
+    const response = await fetchWithAuth(`/snippets/get/all?relation=ALL&${paginationParams(page, pageSize)}&prefix=${snippetName}`);
 
     const snippets: Pagination & { snippetCodeDetails: Snippet[] } = {
       ...response,
@@ -135,16 +135,16 @@ export const useSnippetsOperations = () => {
   };
 
   const getSnippetById = async (id: string): Promise<Snippet> => {
-    const response = await fetchWithAuth(`/snippet/details?snippetId=${id}`);
+    const response = await fetchWithAuth(`/snippets/details?snippetId=${id}`);
     return getSnippet(response, getCompliance(response));
   }
 
   const getUserFriends = async (name: string = "", page: number = 0, pageSize: number = 10): Promise<PaginatedUsers> => {
-    return await fetchWithAuth(`/snippet/get/users?prefix=${name}&${paginationParams(page, pageSize)}`);
+    return await fetchWithAuth(`/snippets/get/users?prefix=${name}&${paginationParams(page, pageSize)}`);
   };
 
   const shareSnippet = async ({ snippetId, name }: { snippetId: string; name: string }): Promise<Snippet> => {
-    const response = await fetchWithAuth('/snippet/share', {
+    const response = await fetchWithAuth('/snippets/share', {
       method: 'POST',
       body: JSON.stringify({ snippetId, username: name })
     });
@@ -264,11 +264,11 @@ export const useSnippetsOperations = () => {
   };
 
   const formatSnippet = async (id: string): Promise<string> => {
-    return await fetchWithAuth('/snippet/get/formatted?snippetId=' + id, {}, true);
+    return await fetchWithAuth('/snippets/get/formatted?snippetId=' + id, {}, true);
   };
 
   const deleteSnippet = async (id: string): Promise<string> => {
-    const response =  await fetchWithAuth(`/snippet/delete?snippetId=${id}`, {
+    const response =  await fetchWithAuth(`/snippets/delete?snippetId=${id}`, {
       method: 'DELETE'
     });
 
