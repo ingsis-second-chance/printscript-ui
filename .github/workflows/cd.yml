@@ -46,7 +46,7 @@ jobs:
 
     env:
       SSH_KEY: ${{ github.ref_name == 'master' && secrets.SSH_KEY_PROD || secrets.SSH_KEY_DEV }}
-      VM_NAME: ${{ github.ref_name == 'main' && 'vm-prod' || 'vm-dev' }}
+      VM_NAME: ${{ github.ref_name == 'master' && 'vm-prod' || 'vm-dev' }}
 
     steps:
       - name: Checkout code
