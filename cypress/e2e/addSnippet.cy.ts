@@ -9,7 +9,7 @@ describe('Add snippet tests', () => {
   it('Can add snippets manually', () => {
     cy.visit(`${Cypress.env("FRONTEND_URL")}`);
     cy.wait(5000);
-    cy.intercept('POST', `${Cypress.env("BACKEND_URL")}/snippet/snippet/save`, (req) => {
+    cy.intercept('POST', `${Cypress.env("BACKEND_URL")}/snippet/snippets/save`, (req) => {
       req.reply((res) => {
         expect(res.body).to.include.keys ("id", "title", "code", "language", "extension", "lintStatus");
         expect(res.statusCode).to.eq(200);
@@ -32,7 +32,7 @@ describe('Add snippet tests', () => {
   it('Can add snippets via file', () => {
     cy.visit("/");
     cy.wait(5000);
-    cy.intercept('POST', `${Cypress.env("BACKEND_URL")}/snippet/snippet/save`, (req) => {
+    cy.intercept('POST', `${Cypress.env("BACKEND_URL")}/snippet/snippets/save`, (req) => {
       req.reply((res) => {
         expect(res.body).to.include.keys ("id", "title", "code", "language", "extension", "lintStatus");
         expect(res.statusCode).to.eq(200);
