@@ -33,7 +33,7 @@ describe('Add snippet tests', () => {
   it('Can share a snippet ', () => {
     cy.get('[aria-label="Share"]').click();
     cy.get('#\\:r9\\:').click();
-    cy.contains('pedro').click();
+    cy.contains('martu').click();
     cy.get('.css-1yuhvjn > .MuiBox-root > .MuiButton-contained').click();
     cy.wait(2000)
   })
