@@ -7,8 +7,8 @@ export function loginViaAuth0Ui(username: string, password: string) {
         Cypress.env('VITE_AUTH0_DOMAIN'),
         { args: { username, password } },
         ({ username, password }) => {
-            cy.get('input#username').type(username)
-            cy.get('input#password').type(password, { log: false })
+            cy.get('input#username').type(username, { force: true })
+            cy.get('input#password').type(password, { log: false, force: true })
             cy.contains('button[value=default]', 'Continue').click({ force: true })
         }
     )
