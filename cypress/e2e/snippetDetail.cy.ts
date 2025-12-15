@@ -1,4 +1,4 @@
-import {paginationParams} from "../../src/utils/pagination";
+import { paginationParams } from "../../src/utils/pagination";
 
 describe('Add snippet tests', () => {
   const snippet = {
@@ -12,11 +12,11 @@ describe('Add snippet tests', () => {
   }
   beforeEach(() => {
     cy.loginToAuth0(
-        Cypress.env("AUTH0_USERNAME"),
-        Cypress.env("AUTH0_PASSWORD")
+      Cypress.env("AUTH0_USERNAME"),
+      Cypress.env("AUTH0_PASSWORD")
     )
 
-    cy.intercept('GET', new RegExp(`${Cypress.env("BACKEND_URL")}/snippet/snippet/details/\\?snippetId=.*`), (req) => {
+    cy.intercept('GET', new RegExp(`${Cypress.env("BACKEND_URL")}/snippet/snippets/details/\\?snippetId=.*`), (req) => {
       req.reply((res) => {
         snippet.id = res.body.id; // Capture the generated UUID from the response
       });
@@ -24,7 +24,7 @@ describe('Add snippet tests', () => {
 
     cy.visit(`${Cypress.env("FRONTEND_URL")}`)
 
-    cy.intercept('GET', `/api/snippet/snippet/get/all?relation=ALL&${paginationParams(0, 10)}&prefix=`).as("getSnippets")
+    cy.intercept('GET', `/api/snippet/snippets/get/all?relation=ALL&${paginationParams(0, 10)}&prefix=`).as("getSnippets")
     cy.wait("@getSnippets")
 
     cy.get('.MuiTableBody-root > :nth-child(1) > :nth-child(1)').click();
@@ -38,22 +38,22 @@ describe('Add snippet tests', () => {
     cy.wait(2000)
   })
 
-  it('Can run snippets', function() {
+  it('Can run snippets', function () {
     cy.get('[data-testid="PlayArrowIcon"]').click();
-    cy.get('.css-1hpabnv > .MuiBox-root > div > .npm__react-simple-code-editor__textarea').should("have.length.greaterThan",0);
+    cy.get('.css-1hpabnv > .MuiBox-root > div > .npm__react-simple-code-editor__textarea').should("have.length.greaterThan", 0);
   });
 
-  it('Can format snippets', function() {
+  it('Can format snippets', function () {
     cy.get('[data-testid="ReadMoreIcon"] > path').click();
   });
 
-  it('Can save snippets', function() {
+  it('Can save snippets', function () {
     cy.get('.css-10egq61 > .MuiBox-root > div > .npm__react-simple-code-editor__textarea').click();
     cy.get('.css-10egq61 > .MuiBox-root > div > .npm__react-simple-code-editor__textarea').type("println(1);");
     cy.get('[data-testid="SaveIcon"] > path').click();
   });
 
-  it('Can delete snippets', function() {
+  it('Can delete snippets', function () {
     cy.get('[data-testid="DeleteIcon"] > path').click();
   });
 })

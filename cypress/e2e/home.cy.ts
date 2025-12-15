@@ -1,14 +1,17 @@
-import {CreateSnippet} from "../../src/utils/snippet";
-import {paginationParams} from "../../src/utils/pagination";
+import { CreateSnippet } from "../../src/utils/snippet";
+import { paginationParams } from "../../src/utils/pagination";
 
 describe('Home', () => {
   beforeEach(() => {
     cy.loginToAuth0(
-        Cypress.env('AUTH0_USERNAME'),
-        Cypress.env('AUTH0_PASSWORD')
+      Cypress.env('AUTH0_USERNAME'),
+      Cypress.env('AUTH0_PASSWORD')
     )
   })
-
+  before(() => {
+    process.env.FRONTEND_URL = Cypress.env("FRONTEND_URL");
+    process.env.BACKEND_URL = Cypress.env("BACKEND_URL");
+  })
   it('Renders home', () => {
     cy.visit(`${Cypress.env("FRONTEND_URL")}`)
     /* ==== Generated with Cypress Studio ==== */
@@ -26,10 +29,10 @@ describe('Home', () => {
 
     first10Snippets.should('have.length.greaterThan', 0)
 
-    first10Snippets.should('have.length.lessThan', 11)
+    first10Snippets.should('have.length.lessThan', 10)
   })
 
-  it('Can creat snippet find snippets by name', () => {
+  it('Can create snippet find snippets by name', () => {
     cy.visit(`${Cypress.env("FRONTEND_URL")}`);
     const snippetData: CreateSnippet = {
       name: "Test name",
@@ -45,19 +48,19 @@ describe('Home', () => {
       code: snippetData.content
     }
 
-    cy.intercept('GET',`${Cypress.env("BACKEND_URL")}/snippet/snippet/get/all?relation=ALL&${paginationParams(0, 10)}&prefix=`,
-        (req) => {
-          req.reply((res) => {
-            expect(res.statusCode).to.eq(200);
-          });
-        }).as('getSnippets');
+    cy.intercept('GET', `${Cypress.env("BACKEND_URL")}/snippet/snippets/get/all?relation=ALL&${paginationParams(0, 10)}&prefix=`,
+      (req) => {
+        req.reply((res) => {
+          expect(res.statusCode).to.eq(200);
+        });
+      }).as('getSnippets');
 
     cy.request({
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('authAccessToken')}`
       },
-      url: `${Cypress.env("BACKEND_URL")}/snippet/snippet/save`,
+      url: `${Cypress.env("BACKEND_URL")}/snippet/snippets/save`,
       body: reqBody,
       failOnStatusCode: false
     }).then((response) => {

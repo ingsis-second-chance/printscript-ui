@@ -1,8 +1,8 @@
 describe('Add snippet tests', () => {
   beforeEach(() => {
     cy.loginToAuth0(
-        Cypress.env('AUTH0_USERNAME'),
-        Cypress.env('AUTH0_PASSWORD')
+      Cypress.env('AUTH0_USERNAME'),
+      Cypress.env('AUTH0_PASSWORD')
     );
   });
 
@@ -11,7 +11,7 @@ describe('Add snippet tests', () => {
     cy.wait(5000);
     cy.intercept('POST', `${Cypress.env("BACKEND_URL")}/snippet/snippets/save`, (req) => {
       req.reply((res) => {
-        expect(res.body).to.include.keys ("id", "title", "code", "language", "extension", "lintStatus");
+        expect(res.body).to.include.keys("id", "title", "code", "language", "extension", "lintStatus");
         expect(res.statusCode).to.eq(200);
       });
     }).as('postRequest');
@@ -34,7 +34,7 @@ describe('Add snippet tests', () => {
     cy.wait(5000);
     cy.intercept('POST', `${Cypress.env("BACKEND_URL")}/snippet/snippets/save`, (req) => {
       req.reply((res) => {
-        expect(res.body).to.include.keys ("id", "title", "code", "language", "extension", "lintStatus");
+        expect(res.body).to.include.keys("id", "title", "code", "language", "extension", "lintStatus");
         expect(res.statusCode).to.eq(200);
       });
     }).as('postRequest');
