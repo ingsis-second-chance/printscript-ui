@@ -40,7 +40,7 @@ describe('Add snippet tests', () => {
 
   it('Can run snippets', function () {
     cy.get('[data-testid="PlayArrowIcon"]').click();
-    cy.get('[data-testid="execution-output"] > .npm__react-simple-code-editor__textarea').should("have.length.greaterThan", 0);
+    cy.get('[data-testid="execution-output"] .npm__react-simple-code-editor__textarea').should("have.length.greaterThan", 0);
   });
 
   it('Can format snippets', function () {
