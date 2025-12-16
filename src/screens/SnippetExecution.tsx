@@ -19,7 +19,7 @@ export const SnippetExecution = ({ executionOutput = [], onInputsChange, isRunni
         <Typography variant="subtitle2" color="text.secondary" mb={1}>
           Output:
         </Typography>
-        <Bòx flex={1} overflow={"auto"} minHeight={200} bgcolor={'black'} color={'white'} code={executionOutput.join('\n')}>
+        <Bòx flex={1} overflow={"auto"} minHeight={200} bgcolor={'black'} color={'white'} code={executionOutput.join('\n')} data-testid="execution-output">
           <Editor
             value={executionOutput.join('\n')}
             padding={10}

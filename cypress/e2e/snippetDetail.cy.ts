@@ -32,16 +32,16 @@ describe('Add snippet tests', () => {
 
   it('Can share a snippet ', () => {
     cy.get('[aria-label="Share"]').click();
-    cy.get('#\\:r9\\:').click();
+    cy.get('#\\:rc\\:').click();
     cy.contains('martu').click();
     cy.get('.css-1yuhvjn > .MuiBox-root > .MuiButton-contained').click();
     cy.wait(2000)
   })
 
-  //it('Can run snippets', function () {
-  //  cy.get('[data-testid="PlayArrowIcon"]').click();
-  //  cy.get('.css-1hpabnv > .MuiBox-root > div > .npm__react-simple-code-editor__textarea').should("have.length.greaterThan", 0);
-  //});
+  it('Can run snippets', function () {
+    cy.get('[data-testid="PlayArrowIcon"]').click();
+    cy.get('[data-testid="execution-output"] > .npm__react-simple-code-editor__textarea').should("have.length.greaterThan", 0);
+  });
 
   it('Can format snippets', function () {
     cy.get('[data-testid="ReadMoreIcon"] > path').click();
