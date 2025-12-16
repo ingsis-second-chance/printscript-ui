@@ -283,6 +283,13 @@ export const useSnippetsOperations = () => {
     }, { extension: 'psc', language: 'printscript' }];
   };
 
+  const runSnippet = async (id: string, inputs: string[] = []): Promise<string[]> => {
+    return await fetchWithAuth('/snippets/run', {
+      method: 'POST',
+      body: JSON.stringify({ snippetId: id, inputs })
+    });
+  };
+
   return {
     createSnippet,
     updateSnippet,
@@ -300,7 +307,8 @@ export const useSnippetsOperations = () => {
     modifyLintingRule,
     formatSnippet,
     deleteSnippet,
-    getFileTypes
+    getFileTypes,
+    runSnippet
   };
 };
 
@@ -431,4 +439,11 @@ export const useDeleteSnippet = ({ onSuccess }: { onSuccess: () => void }) => {
 export const useGetFileTypes = () => {
   const snippetOperations = useSnippetsOperations();
   return useQuery<FileType[], Error>('fileTypes', () => snippetOperations.getFileTypes());
+};
+
+export const useRunSnippet = () => {
+  const snippetOperations = useSnippetsOperations();
+  return useMutation<string[], Error, { id: string; inputs?: string[] }>(
+    ({ id, inputs = [] }) => snippetOperations.runSnippet(id, inputs)
+  );
 };
